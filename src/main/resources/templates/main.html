@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
+    <title>Successful login</title>
+</head>
+<body>
+<div class="container" style="text-align: center">
+    <div class="row">
+        <div class="col-12">
+            <h1>To Do List</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <form method="post" th:action="@{/item/add}">
+                <div class="input-group mb-3">
+                    <input class="form-control" name="description" type="text">
+                    <div class="input-group-append">
+                        <input class="btn btn-outline-primary" type="submit" value="Add ToDo"></input>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <form method="post" style="margin-bottom: 1.1%" th:action="@{/item/delete}" th:each="item : ${items}"
+                  th:if="items != null">
+                <input hidden name="id" th:value="${item.id}">
+                <input disabled name="description" style="border-width:0px;border:none;" th:value="${item.description}">
+                <input disabled name="date_created" style="border-width:0px;border:none;"
+                       th:value="${#dates.format(item.date_created, 'dd-MMM-yyyy')}">
+                <input class="btn btn-danger btn-sm" type="submit" value="Delete">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
