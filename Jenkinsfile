@@ -1,8 +1,8 @@
 pipeline {
   environment{
-    registory = "https://hub.docker.com/repository/docker/wisekingdavid/deveops"
+    registry = "wisekingdavid/devops"
     registryCredential = 'dockerhub_id'  
-    dockerImage = 'deveops'
+    dockerImage = 'devops'
   }
   
     agent any
@@ -22,7 +22,7 @@ pipeline {
       stage('Build') {
         steps {
           script {
-            dockerImage = docker.build + registry
+            dockerImage = docker.build + registry + ":1.0"
           }
         }
       }
@@ -40,7 +40,7 @@ pipeline {
       
       stage('clean up'){
         steps {
-          sh 'docker rmi $registry'
+          sh "docker rmi $registry:1.0"
         }
       }
     }
