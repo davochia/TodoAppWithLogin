@@ -77,31 +77,31 @@ pipeline {
         } 
 
  
-//stage('Set Terraform path') {
-  //  steps {
-    //  script {
-      //  def tfHome = tool name: 'Terraform'
-        //env.PATH = "${tfHome}:${env.PATH}"
-       //}
-       //sh 'terraform version'
+        stage('Set Terraform path') {
+            steps {
+              script {
+                def tfHome = tool name: 'Terraform'
+                env.PATH = "${tfHome}:${env.PATH}"
+               }
+               sh 'terraform version'
 
-      //}
-    //}
-    
-    stage('Provision infrastructure') {
-        steps {
-              withCredentials([azureServicePrincipal('azure-id')]) {
-                  script{
-                    sh  'terraform init'
-                    sh  'terraform apply'
-                    sh  'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
-
-                    }
               }
-                // sh ‘terraform destroy -auto-approve’
-          }
+            }
+    
+        stage('Provision infrastructure') {
+            steps {
+                  withCredentials([azureServicePrincipal('azure-id')]) {
+                      script{
+                        sh  'terraform init'
+                        sh  'terraform apply'
+                        sh  'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
 
-        }
+                        }
+                  }
+                    // sh ‘terraform destroy -auto-approve’
+              }
+
+            }
         
     }
 }
