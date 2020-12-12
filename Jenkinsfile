@@ -1,43 +1,21 @@
-pipeline{
+pipeline {
+  agent any
 
-    agent any
-  
-    stages {
-  
-        stage("build"){
-            
-            steps{
-                
-                echo 'Building application'
-                echo 'start application build'
+  tools {
+    maven 'Maven-3.6.3'
+  }
 
-      
-            }
-        }
-        
-        stage("test"){
-            
-            steps{
-                
-                echo 'Testing application'
-            }
-        }
-        
-        stage("deploy"){
-            
-            steps{
-                
-                echo 'Deploying application'
-            }
-        }
-        
-        stage("cleanup"){
-            
-            steps{
-                
-                echo 'Clean up application'
-            }
-        }
+  stages {
+    stage('Build') {
+      steps {
+        sh 'mvn package'
+      }
     }
+  }
 
+  post {
+    always {
+      archive 'target/**/*.jar'
+    }
+  }
 }
