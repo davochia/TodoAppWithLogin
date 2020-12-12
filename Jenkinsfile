@@ -1,21 +1,48 @@
 pipeline {
-  agent any
-
-  tools {
-    maven 'Maven-3.6.3'
+  environment{
+    registory = "wisekingdavid/deveops"
+    registryCredential = 'dockerhub_id'  
+    dockerImage = 'deveops'
   }
+  
+    agent any
 
-  stages {
-    stage('Build') {
-      steps {
-        sh 'mvn package'
+    tools {
+      maven 'Maven-3.6.3'
+    }
+
+    stages {
+      
+      stage('Cloning git repo') {
+        steps {
+          git 'https://github.com/davochia/TodoAppWithLogin.git'
+        }
+      }
+
+      stage('Build') {
+        steps {
+          script {
+            dockerImage = docker.build + registry ":$BUILD_NUMBER"
+          }
+        }
+      }
+      
+      
+      stage('deploy to dockerhub'){
+        steps {
+          script{
+            docker.withRegistory('devops', registryCredential){
+              dockerImage.push()
+            }
+          }
+        }
       }
     }
-  }
-
-  post {
-    always {
-      archive 'target/**/*.jar'
+      
+      stage('clean up'){
+        steps {
+          sh 'docker rmi $registry:$BUILD_NUMBER'
+        }
+      }
     }
-  }
 }
