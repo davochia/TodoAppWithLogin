@@ -5,27 +5,37 @@ pipeline{
     stages {
   
         stage("build"){
+            
             steps{
+                
                 echo 'Building application'
+                echo 'start application build'
+
       
             }
         }
         
         stage("test"){
+            
             steps{
+                
                 echo 'Testing application'
             }
         }
         
         stage("deploy"){
+            
             steps{
-                'Deploying application'
+                
+                echo 'Deploying application'
             }
         }
         
         stage("cleanup"){
+            
             steps{
-                'Clean up application'
+                
+                echo 'Clean up application'
             }
         }
     }
