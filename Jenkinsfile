@@ -16,7 +16,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-                //git 'https://github.com/MariaKritou/DevOps.git'
+                git 'https://github.com/MariaKritou/DevOps.git'
 
                 // Run Maven on a Unix agent.
                 sh "mvn clean package"
@@ -36,14 +36,14 @@ pipeline {
             
         }
         
-        //stage('Cloning our Git') { 
+        stage('Cloning our Git') { 
 
-          //  steps { 
+            steps { 
 
-                //git 'https://github.com/davochia/TodoAppWithLogin.git' 
+                git 'https://github.com/davochia/TodoAppWithLogin.git' 
 
-            //}
-        //} 
+            }
+        } 
         
         stage('Building our image') { 
             steps { 
