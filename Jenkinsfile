@@ -23,7 +23,7 @@ pipeline {
       steps {
         script {
           //sh 'mvn package'
-          dockerImage = docker.build + registry
+          dockerImage = docker.build + registry + ":$BUILD_NUMBER"
         }
       }
     }
@@ -41,7 +41,7 @@ pipeline {
 
     stage('clean up'){
       steps {
-        sh "docker rmi $registry"
+        sh "docker rmi $registry:BUILD_NUMBER"
       }
     }
   }
