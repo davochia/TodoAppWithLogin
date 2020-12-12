@@ -1,6 +1,6 @@
 pipeline {
     environment { 
-        registry = "wisekingdavid/devopssss" 
+        registry = "wisekingdavid/devops" 
         registryCredential = 'dockerhub_id' 
         dockerImage = '' 
     }
@@ -11,12 +11,22 @@ pipeline {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "Maven-3.6.3"
     }
+    
+    stage('Cloning our Git') { 
+
+            steps { 
+
+                git 'https://github.com/davochia/TodoAppWithLogin.git' 
+
+            }
+        } 
+    
 
     stages {
         stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-                git 'https://github.com/davochia/TodoAppWithLogin.git' 
+                //git 'https://github.com/davochia/TodoAppWithLogin.git' 
 
                 // Run Maven on a Unix agent.
                 sh "mvn clean package"
@@ -36,14 +46,7 @@ pipeline {
             
         }
         
-        stage('Cloning our Git') { 
-
-            steps { 
-
-                git 'https://github.com/davochia/TodoAppWithLogin.git' 
-
-            }
-        } 
+        
         
         stage('Building our image') { 
             steps { 
