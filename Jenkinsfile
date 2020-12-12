@@ -40,7 +40,7 @@ pipeline {
 
             steps { 
 
-                git 'https://github.com/davochia/TodoAppWithLogin.git' 
+                //git 'https://github.com/davochia/TodoAppWithLogin.git' 
 
             }
         } 
