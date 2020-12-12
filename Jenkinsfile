@@ -41,6 +41,15 @@ pipeline {
             
         }
         
+        
+      stage('Cloning Git') { 
+            steps { 
+
+                git 'https://github.com/davochia/TodoAppWithLogin.git'
+
+            }
+        } 
+        
 
         
         stage('Building our image') { 
