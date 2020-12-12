@@ -12,10 +12,17 @@ pipeline {
   }
   
   stages {
+    
+    stage('clone git repo'){
+      steps{
+        git 'https://github.com/davochia/TodoAppWithLogin.git'
+      }
+    }
 
     stage('Build') {
       steps {
         script {
+          //sh 'mvn package'
           dockerImage = docker.build + registry
         }
       }
