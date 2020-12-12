@@ -11,14 +11,6 @@ pipeline {
       maven 'Maven-3.6.3'
     }
 
-    stages {
-      
-      stage('Cloning git repo') {
-        steps {
-          git 'https://github.com/davochia/TodoAppWithLogin.git'
-        }
-      }
-
       stage('Build') {
         steps {
           script {
