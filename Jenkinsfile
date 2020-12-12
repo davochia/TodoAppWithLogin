@@ -1,13 +1,8 @@
 pipeline {
-    
-       environment { 
-
+    environment { 
         registry = "wisekingdavid/devops" 
-
         registryCredential = 'dockerhub_id' 
-
         dockerImage = '' 
-
     }
 
     agent any
@@ -45,7 +40,7 @@ pipeline {
 
             steps { 
 
-                //git 'https://github.com/davochia/TodoAppWithLogin.git' 
+                git 'https://github.com/davochia/TodoAppWithLogin.git' 
 
             }
         } 
