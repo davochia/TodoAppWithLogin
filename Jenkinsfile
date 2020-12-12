@@ -2,7 +2,7 @@ pipeline {
     
        environment { 
 
-        registry = "wisekingdavid/devops" 
+        registry = "wisekingdavid/devops-2" 
 
         registryCredential = 'dockerhub_id' 
 
@@ -14,14 +14,14 @@ pipeline {
 
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
-        maven 'Maven-3.6.3'
+        maven "Maven-3.6.3"
     }
 
     stages {
         stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-                //git 'https://github.com/davochia/TodoAppWithLogin.git'
+                //git 'https://github.com/MariaKritou/DevOps.git'
 
                 // Run Maven on a Unix agent.
                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
@@ -41,17 +41,14 @@ pipeline {
             
         }
         
-        
-      stage('Cloning Git') { 
+        stage('Cloning our Git') { 
+
             steps { 
 
-                git 'https://github.com/davochia/TodoAppWithLogin.git'
+                git 'https://github.com/davochia/TodoAppWithLogin.git' 
 
             }
         } 
-        
-
-        
         stage('Building our image') { 
             steps { 
                 script { 
@@ -62,7 +59,7 @@ pipeline {
         stage('Deploy our image') { 
             steps { 
                 script { 
-                    docker.withRegistry( '', registryCredential ) {
+                    docker.withRegistry( '', registryCredential ) { 
                       dockerImage.push() 
 
                     }
@@ -79,14 +76,31 @@ pipeline {
         } 
 
  
-        stage('TF Plan') {
-           steps {
-             container('terraform') {
-               sh 'terraform init'
-               sh 'terraform plan -out myplan'
-             }
-           }
-         }
+stage('Set Terraform path') {
+    steps {
+      script {
+        def tfHome = tool name: 'Terraform'
+        env.PATH = "${tfHome}:${env.PATH}"
+       }
+       sh 'terraform version'
+
+      }
+    }
+    
+    stage('Provision infrastructure') {
+        steps {
+              withCredentials([azureServicePrincipal('1fba7590-0c5e-4cd4-a8a9-733e30590c66')]) {
+                  script{
+                    sh  'terraform init'
+                    sh  'terraform apply'
+                    sh  'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
+
+                    }
+              }
+                // sh ‘terraform destroy -auto-approve’
+          }
+
+        }
+        
     }
 }
-
