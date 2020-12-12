@@ -1,8 +1,8 @@
 pipeline {
     
-       environment { 
+     environment { 
 
-        registry = "wisekingdavid/devops-2" 
+        registry = "wisekingdavid/devops" 
 
         registryCredential = 'dockerhub_id' 
 
@@ -45,7 +45,7 @@ pipeline {
 
             steps { 
 
-                git 'https://github.com/davochia/TodoAppWithLogin.git' 
+                //git 'https://github.com/davochia/TodoAppWithLogin.git' 
 
             }
         } 
@@ -57,6 +57,7 @@ pipeline {
                 }
             } 
         }
+        
         stage('Deploy our image') { 
             steps { 
                 script { 
