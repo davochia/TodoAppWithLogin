@@ -12,7 +12,10 @@ pipeline {
         maven "Maven-3.6.3"
     }
     
-    stage('Cloning our Git') { 
+
+    stages {
+        
+        stage('Cloning our Git') { 
 
             steps { 
 
@@ -20,9 +23,7 @@ pipeline {
 
             }
         } 
-    
-
-    stages {
+        
         stage('Build') {
             steps {
                 // Get some code from a GitHub repository
