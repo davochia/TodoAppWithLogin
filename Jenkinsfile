@@ -22,7 +22,7 @@ pipeline {
       stage('Build') {
         steps {
           script {
-            dockerImage = docker.build + registry ":$1.0"
+            dockerImage = docker.build + registry ":1.0"
           }
         }
       }
@@ -41,7 +41,7 @@ pipeline {
       
       stage('clean up'){
         steps {
-          sh 'docker rmi $registry:$1.0'
+          sh 'docker rmi $registry:1.0'
         }
       }
     }
