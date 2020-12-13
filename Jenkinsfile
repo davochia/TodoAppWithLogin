@@ -1,12 +1,13 @@
 pipeline {
-    environment { 
+   
+    agent {
+        dockerfile true
+    }
+    
+     environment { 
         registry = "wisekingdavid/devops" 
         registryCredential = 'dockerhub_id' 
         dockerImage = '' 
-    }
-
-    agent {
-        dockerfile true
     }
 
     tools {
