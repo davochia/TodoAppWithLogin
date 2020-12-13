@@ -1,14 +1,10 @@
 pipeline {
-   
-    agent {
-        dockerfile true
-    }
-    
-     environment { 
-        registry = "wisekingdavid/devops" 
-        registryCredential = 'dockerhub_id' 
-        dockerImage = '' 
-    }
+     
+  environment { 
+     registry = "wisekingdavid/devops" 
+     registryCredential = 'dockerhub_id' 
+     dockerImage = '' 
+ }
 
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
