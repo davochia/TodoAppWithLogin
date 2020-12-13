@@ -26,7 +26,7 @@ pipeline {
           stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-                git 'https://github.com/davochia/TodoAppWithLogin.git', branch: 'test-jenkins', credentialsId: 'GitHub' 
+                git 'https://github.com/davochia/TodoAppWithLogin.git'//, branch: 'test-jenkins', credentialsId: 'GitHub' 
 
                 // Run Maven on a Unix agent.
                 sh "mvn clean package"
