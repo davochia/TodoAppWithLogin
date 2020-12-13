@@ -1,8 +1,4 @@
 pipeline {
-     agent {
-        docker { image 'node:14-alpine' }
-    
-     }
      
      environment { 
      registry = "wisekingdavid/devops" 
@@ -50,7 +46,7 @@ pipeline {
           stage('Building our image') { 
             steps { 
                 script { 
-                     //sh 'docker build - < Dockerfile'
+                     image 'node:14-alpine' 
                      
                      dockerImage = docker.build registry + ":$BUILD_NUMBER" 
                 }
