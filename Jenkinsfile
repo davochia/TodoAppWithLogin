@@ -1,18 +1,25 @@
 pipeline {
      
-  environment { 
+     environment { 
      registry = "wisekingdavid/devops" 
      registryCredential = 'dockerhub_id' 
      dockerImage = '' 
- }
-
-    tools {
+     }
+     
+     agent any
+     
+     
+     triggers {
+        pollSCM '* * * * *'
+    }
+     
+     tools {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "Maven-3.6.3"
     }
-    
-
-    stages {
+     
+     
+     stages {
         
         stage('Build') {
             steps {
@@ -73,8 +80,8 @@ pipeline {
 
               }
             }
-    
-        stage('Provision infrastructure') {
+          
+          stage('Provision infrastructure') {
             steps {
                   withCredentials([azureServicePrincipal('azure-id')]) {
                       script{
@@ -87,7 +94,7 @@ pipeline {
                     // sh ‘terraform destroy -auto-approve’
               }
 
-            }
+          }
         
     }
 }
