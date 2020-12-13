@@ -24,7 +24,7 @@ pipeline {
           stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-               // git 'https://github.com/davochia/TodoAppWithLogin.git'//, branch: 'test-jenkins', credentialsId: 'GitHub' 
+               git 'https://github.com/davochia/TodoAppWithLogin.git'//, branch: 'test-jenkins', credentialsId: 'GitHub' 
 
                 // Run Maven on a Unix agent.
                 sh "mvn clean package"
@@ -41,59 +41,68 @@ pipeline {
             
         }
           
-          stage('Building image'){
-               steps { 
-                script {                      
-                     dockerImage = docker.build -t registry + ":$BUILD_NUMBER"
+          stage('Cloning our Git') { 
+
+            steps { 
+
+               git 'https://github.com/davochia/TodoAppWithLogin.git'//, branch: 'test-jenkins', credentialsId: 'GitHub' 
+
+            }
+        } 
+        stage('Building our image') { 
+            steps { 
+                script { 
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER" 
                 }
             } 
-          }
-        
+        }
         stage('Deploy our image') { 
             steps { 
                 script { 
                     docker.withRegistry( '', registryCredential ) { 
-                      dockerImage.push("$BUILD_NUMBER")
-                         dockerImage.push('latest')
+                      dockerImage.push() 
+
                     }
+
                 } 
+
             }
+
         } 
-          
-          
         stage('Cleaning up') { 
             steps { 
                 sh "docker rmi $registry:$BUILD_NUMBER" 
-                 sh "docker rmi $imagename:latest"
             }
         } 
 
  
-        stage('Set Terraform path') {
-            steps {
-              script {
-                def tfHome = tool name: 'Terraform'
-                env.PATH = "${tfHome}:${env.PATH}"
-               }
-               sh 'terraform version'
+stage('Set Terraform path') {
+    steps {
+      script {
+        def tfHome = tool name: 'Terraform'
+        env.PATH = "${tfHome}:${env.PATH}"
+       }
+       sh 'terraform version'
 
-              }
-            }
-          
-          stage('Provision infrastructure') {
-            steps {
-                  withCredentials([azureServicePrincipal('azure-id')]) {
-                      script{
-                        sh  'terraform init'
-                        sh  'terraform apply'
-                        sh  'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
-
-                        }
-                  }
-                    // sh ‘terraform destroy -auto-approve’
-              }
-
-          }
-        
+      }
     }
+    
+    stage('Provision infrastructure') {
+        steps {
+              withCredentials([azureServicePrincipal('azure-id')]) {
+                  script{
+                    sh  'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
+                    sh  'terraform init'
+                    sh  'terraform plan'
+                    sh  'terraform apply -input=false -auto-approve'
+                      
+                    }
+              }
+                // sh ‘terraform destroy -auto-approve’
+          }
+
+        }
+        
 }
+}
+
