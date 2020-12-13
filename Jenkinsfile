@@ -44,7 +44,7 @@ pipeline {
           stage('Building image'){
                steps { 
                 script {                      
-                     def dockerImage = 'Dockerfile' + ":$BUILD_NUMBER" 
+                     def dockerImage = '- < Dockerfile' + ":$BUILD_NUMBER" 
                 }
             } 
           }
