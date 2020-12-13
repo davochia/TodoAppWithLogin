@@ -47,6 +47,9 @@ pipeline {
             steps { 
                 script { 
                      //sh 'docker build - < Dockerfile'
+                     
+                     sh 'apt-get update && apt-get install -y docker.io' 
+
                      dockerImage = docker.build registry + ":$BUILD_NUMBER" 
                 }
             } 
