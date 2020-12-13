@@ -1,4 +1,8 @@
 pipeline {
+     agent {
+        docker { image 'node:14-alpine' }
+    
+     }
      
      environment { 
      registry = "wisekingdavid/devops" 
@@ -48,8 +52,6 @@ pipeline {
                 script { 
                      //sh 'docker build - < Dockerfile'
                      
-                     sh 'apt-get update && apt-get install -y docker.io' 
-
                      dockerImage = docker.build registry + ":$BUILD_NUMBER" 
                 }
             } 
