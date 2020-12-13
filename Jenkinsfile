@@ -41,19 +41,6 @@ pipeline {
             
         }
           
-          
-          
-          stage('Installing docker') { 
-               agent {
-                docker { image 'node:14-alpine' }
-            }
-               steps {
-                sh 'node --version'
-            }
-               
-               
-        }
-          
           stage('Building image'){
                steps { 
                 script {                      
