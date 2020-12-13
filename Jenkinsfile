@@ -20,11 +20,11 @@ pipeline {
      
      
      stages {
-        
-        stage('Build') {
+          
+          stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-                //git 'https://github.com/davochia/TodoAppWithLogin.git' 
+                git 'https://github.com/davochia/TodoAppWithLogin.git' 
 
                 // Run Maven on a Unix agent.
                 sh "mvn clean package"
@@ -40,12 +40,22 @@ pipeline {
             }
             
         }
-        
-        
-        stage('Building our image') { 
+          
+          
+          stage('Cloning our Git') { 
+
+            steps { 
+
+                git 'https://github.com/davochia/TodoAppWithLogin.git' 
+
+            }
+        } 
+          
+          
+          stage('Building our image') { 
             steps { 
                 script { 
-                    dockerImage = docker.build registry // + ":$BUILD_NUMBER" 
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER" 
                 }
             } 
         }
@@ -65,7 +75,7 @@ pipeline {
         } 
         stage('Cleaning up') { 
             steps { 
-                sh "docker rmi $registry" //:$BUILD_NUMBER" 
+                sh "docker rmi $registry:$BUILD_NUMBER" 
             }
         } 
 
