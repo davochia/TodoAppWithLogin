@@ -43,17 +43,24 @@ pipeline {
           
           
           
-          stage('Building our image') { 
+          stage('Installing docker') { 
                agent {
                 docker { image 'node:14-alpine' }
             }
+               steps {
+                sh 'node --version'
+            }
                
+               
+        }
+          
+          stage('Building image'){
                steps { 
                 script {                      
                      dockerImage = docker.build registry + ":$BUILD_NUMBER" 
                 }
             } 
-        }
+          }
         
         stage('Deploy our image') { 
             steps { 
