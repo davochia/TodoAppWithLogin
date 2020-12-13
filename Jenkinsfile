@@ -44,7 +44,7 @@ pipeline {
           stage('Building image'){
                steps { 
                 script {                      
-                     def dockerImage = 'Dockerfile' + registry + ":$BUILD_NUMBER" 
+                     def dockerImage = 'Dockerfile' + ":$BUILD_NUMBER" 
                 }
             } 
           }
@@ -54,14 +54,12 @@ pipeline {
                 script { 
                     docker.withRegistry( '', registryCredential ) { 
                       dockerImage.push() 
-
                     }
-
                 } 
-
             }
-
         } 
+          
+          
         stage('Cleaning up') { 
             steps { 
                 sh "docker rmi $registry:$BUILD_NUMBER" 
