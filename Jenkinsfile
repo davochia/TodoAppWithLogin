@@ -24,7 +24,7 @@ pipeline {
           stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-                //git 'https://github.com/davochia/TodoAppWithLogin.git' 
+                git ([url: 'https://github.com/davochia/TodoAppWithLogin.git', branch: 'test-jenkins', credentialsId: 'GitHub']) 
 
                 // Run Maven on a Unix agent.
                 sh "mvn clean package"
@@ -44,7 +44,7 @@ pipeline {
           stage('Building image'){
                steps { 
                 script {                      
-                     def dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                     dockerImage = docker.build registry //+ ":$BUILD_NUMBER"
                 }
             } 
           }
@@ -53,7 +53,8 @@ pipeline {
             steps { 
                 script { 
                     docker.withRegistry( '', registryCredential ) { 
-                      dockerImage.push() 
+                      dockerImage.push("$BUILD_NUMBER")
+                         dockerImage.push('latest')
                     }
                 } 
             }
@@ -63,6 +64,7 @@ pipeline {
         stage('Cleaning up') { 
             steps { 
                 sh "docker rmi $registry:$BUILD_NUMBER" 
+                 sh "docker rmi $imagename:latest"
             }
         } 
 
