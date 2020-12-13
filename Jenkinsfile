@@ -46,7 +46,7 @@ pipeline {
           stage('Building our image') { 
             steps { 
                 script { 
-                     sh 'node:14-alpine' 
+                     //sh 'node:14-alpine' 
                      
                      dockerImage = docker.build registry + ":$BUILD_NUMBER" 
                 }
