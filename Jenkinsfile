@@ -10,7 +10,7 @@ pipeline {
 
     }
 
-    agent {dockerfile true}
+    agent any //{dockerfile true}
 
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
@@ -50,6 +50,7 @@ pipeline {
         //} 
         
         stage('Building our image') { 
+            agent {dockerfile true}
              steps { 
                  script { 
                      dockerImage = docker.build registry + ":$BUILD_NUMBER" 
