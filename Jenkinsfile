@@ -41,14 +41,15 @@ pipeline {
             
         }
           
-          stage('Cloning our Git') { 
+          //stage('Cloning our Git') { 
 
-            steps { 
+            //steps { 
 
-               git 'https://github.com/davochia/TodoAppWithLogin.git'//, branch: 'test-jenkins', credentialsId: 'GitHub' 
+               //git 'https://github.com/davochia/TodoAppWithLogin.git'//, branch: 'test-jenkins', credentialsId: 'GitHub' 
 
-            }
-        } 
+            //}
+       // } 
+          
         stage('Building our image') { 
             steps { 
                 script { 
