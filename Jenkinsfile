@@ -40,14 +40,14 @@ pipeline {
             
         }
         
-        stage('Cloning our Git') { 
+        //stage('Cloning our Git') { 
 
-            steps { 
+            //steps { 
 
                 //git ([url: 'https://github.com/davochia/TodoAppWithLogin.git', branch: 'test-jenkins', credentialsId: 'github'])
 
-            }
-        } 
+            //}
+        //} 
         
         stage('Building our image') { 
              steps { 
