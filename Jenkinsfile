@@ -24,7 +24,7 @@ pipeline {
           stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-               //git 'https://github.com/davochia/TodoAppWithLogin.git'//, branch: 'test-jenkins', credentialsId: 'GitHub' 
+               git 'https://github.com/davochia/TodoAppWithLogin.git'//, branch: 'test-jenkins', credentialsId: 'GitHub' 
 
                 // Run Maven on a Unix agent.
                 sh "mvn clean package"
@@ -41,14 +41,21 @@ pipeline {
             
         }
           
-          //stage('Cloning our Git') { 
+          stage('Cloning our Git') { 
 
-            //steps { 
+            steps { 
 
-               //git 'https://github.com/davochia/TodoAppWithLogin.git'//, branch: 'test-jenkins', credentialsId: 'GitHub' 
+               git 'https://github.com/davochia/TodoAppWithLogin.git'//, branch: 'test-jenkins', credentialsId: 'GitHub' 
 
-            //}
-       // } 
+            }
+               options{
+                    timestamps()
+                    skipDefaultCheckout()
+                    disableConcurrentBuilds()
+                    timeout(time: 1, unit: "HOURS)
+               }
+              
+        } 
           
         stage('Building our image') { 
             steps { 
