@@ -23,7 +23,7 @@ pipeline {
                 // Get some code from a GitHub repository
                 //git ([url: 'https://github.com/davochia/TodoAppWithLogin.git', branch: 'test-jenkins', credentialsId: 'github'])
                 // Run Maven on a Unix agent.
-                //sh "mvn -Dmaven.test.failure.ignore=true clean package"
+                sh "mvn -Dmaven.test.failure.ignore=true clean package"
 
                 // To run Maven on a Windows agent, use
                 // bat "mvn -Dmaven.test.failure.ignore=true clean package"
