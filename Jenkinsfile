@@ -102,6 +102,6 @@ stage('Set Terraform path') {
 
         }
         
-}
+    }
 }
 
