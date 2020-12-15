@@ -21,8 +21,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-                git 'https://github.com/davochia/TodoAppWithLogin.git'
-
+                git ([url: 'https://github.com/davochia/TodoAppWithLogin.git', branch: 'test-jenkins', credentialsId: 'github'])
                 // Run Maven on a Unix agent.
                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
 
@@ -45,7 +44,7 @@ pipeline {
 
             steps { 
 
-                git 'https://github.com/davochia/TodoAppWithLogin.git' 
+                git ([url: 'https://github.com/davochia/TodoAppWithLogin.git', branch: 'test-jenkins', credentialsId: 'github'])
 
             }
         } 
