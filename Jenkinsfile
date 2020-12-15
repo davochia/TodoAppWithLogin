@@ -75,17 +75,17 @@ pipeline {
         } 
 
  
-stage('Set Terraform path') {
-    steps {
-      script {
-        def tfHome = tool name: 'Terraform'
-        env.PATH = "${tfHome}:${env.PATH}"
-       }
-       sh 'terraform version'
+    stage('Set Terraform path') {
+        steps {
+          script {
+            def tfHome = tool name: 'Terraform'
+            env.PATH = "${tfHome}:${env.PATH}"
+           }
+           sh 'terraform version'
 
-      }
-    }
-    
+          }
+        }
+
     stage('Provision infrastructure') {
         steps {
               //withCredentials([azureServicePrincipal('1fba7590-0c5e-4cd4-a8a9-733e30590c66')]) {
