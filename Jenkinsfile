@@ -89,15 +89,15 @@ stage('Set Terraform path') {
     
     stage('Provision infrastructure') {
         steps {
-              withCredentials([azureServicePrincipal('azure-id')]) {
+              //withCredentials([azureServicePrincipal('azure-id')]) {
                   script{
-                    sh  'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
+                    //sh  'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
                     sh  'terraform init'
                     sh  'terraform plan'
                     sh  'terraform apply -input=false -auto-approve'
                       
                     }
-              }
+              //}
                 // sh ‘terraform destroy -auto-approve’
           }
 
