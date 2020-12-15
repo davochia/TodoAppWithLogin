@@ -10,7 +10,7 @@ pipeline {
 
     }
 
-    agent {dockerfile true}
+    agent any //{dockerfile true}
 
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
@@ -21,9 +21,9 @@ pipeline {
         stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-                git ([url: 'https://github.com/davochia/TodoAppWithLogin.git', branch: 'test-jenkins', credentialsId: 'github'])
+                //git ([url: 'https://github.com/davochia/TodoAppWithLogin.git', branch: 'test-jenkins', credentialsId: 'github'])
                 // Run Maven on a Unix agent.
-                sh "mvn -Dmaven.test.failure.ignore=true clean package"
+                //sh "mvn -Dmaven.test.failure.ignore=true clean package"
 
                 // To run Maven on a Windows agent, use
                 // bat "mvn -Dmaven.test.failure.ignore=true clean package"
@@ -44,7 +44,7 @@ pipeline {
 
             steps { 
 
-                git ([url: 'https://github.com/davochia/TodoAppWithLogin.git', branch: 'test-jenkins', credentialsId: 'github'])
+                //git ([url: 'https://github.com/davochia/TodoAppWithLogin.git', branch: 'test-jenkins', credentialsId: 'github'])
 
             }
         } 
