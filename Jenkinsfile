@@ -98,7 +98,7 @@ stage('Set Terraform path') {
                     }
               }
                 // sh ‘terraform destroy -auto-approve’
-          }
+          //}
 
         }
         
